@@ -1,0 +1,15 @@
+---
+
+- name: Install prerequisits
+  ansible.builtin.package:
+    name: git
+
+- name: Install helm plugins
+  kubernetes.core.helm_plugin:
+    plugin_name: "{{ helm_plugin.name | default(omit) }}"
+    plugin_path: "{{ helm_plugin.path | default(omit) }}"
+    binary_path: "{{ helm_path }}"
+    state: "{{ helm_plugin.state | default('present') }}"
+  loop: "{{ helm_plugins }}"
+  loop_control:
+    loop_var: helm_plugin

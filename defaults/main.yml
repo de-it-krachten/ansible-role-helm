@@ -1,0 +1,34 @@
+---
+
+# Github CLI - API
+helm_api: https://api.github.com/repos/helm/helm
+
+# Github CLI - repo
+helm_repo: https://github.com/helm/helm
+
+# Lookup table for architecture
+helm:
+  architecture:
+    x86_64: amd64
+    i386: i386
+    armv6l: arm
+    armv7l: arm
+    aarch64: arm64
+  system:
+    Linux: linux
+    Darwin: darwin
+
+# Version of the CLI to install
+helm_version: latest
+
+# Location/ownership/permissions of the binary
+helm_path: /usr/local/bin/helm
+helm_owner: root
+helm_group: root
+helm_mode: '0755'
+
+helm_plugins:
+  - path: https://github.com/databus23/helm-diff
+    state: present
+#   - name: diff
+#     state: absent

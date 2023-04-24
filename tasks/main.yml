@@ -1,0 +1,8 @@
+---
+
+- name: Install helm binary
+  ansible.builtin.include_tasks: binary.yml
+
+- name: Install helm plugins
+  ansible.builtin.include_tasks: plugins.yml
+  when: helm_plugins | length > 0

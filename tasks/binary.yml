@@ -1,0 +1,90 @@
+---
+
+- name: Lookup alternative system & architecture
+  ansible.builtin.set_fact:
+    helm_system: "{{ helm['system'][ansible_system] }}"
+    helm_architecture: "{{ helm['architecture'][ansible_architecture] | default(ansible_architecture) }}"
+
+- name: Get helm version installed
+  ansible.builtin.shell: |
+    set -o pipefail
+    {{ helm_path }} version | sed "s/.*{Version:\"v//;s/\".*//"
+  args:
+    executable: /bin/bash
+  changed_when: no
+  failed_when: no
+  check_mode: no
+  register: helm_version_installed
+
+- name: Set installed version as fact
+  ansible.builtin.set_fact:
+    helm_version_installed: "{{ 'N/A' if helm_version_installed.stdout | length == 0 else 'v' + helm_version_installed.stdout }}"
+
+- name: Get latest helm release info
+  ansible.builtin.uri:
+    url: "{{ helm_api + '/releases/latest' }}"
+  check_mode: no
+  register: helm_version_info
+
+- name: Get latest release tag
+  ansible.builtin.set_fact:
+    helm_version_latest: "{{ helm_version_info.json.tag_name }}"
+
+- name: Replace 'latest' by the actual version
+  ansible.builtin.set_fact:
+    helm_version: "{{ helm_version_latest }}"
+  when: helm_version == 'latest'
+
+- name: Get all helm releases info
+  ansible.builtin.uri:
+    url: "{{ helm_api + '/releases?per_page=1000' }}"
+  check_mode: no
+  register: helm_version_info
+
+- name: Get version information
+  ansible.builtin.set_fact:
+    helm_version_info: "{{ helm_version_info.json | json_query(query) | first }}"
+  vars:
+    query: "[?tag_name=='{{ helm_version }}']"
+
+- name: Construct filename based on the system & architecture
+  ansible.builtin.set_fact:
+    helm_file: "helm-{{ helm_version }}-{{ helm_system }}-{{ helm_architecture }}.tar.gz"
+
+- name: Show helm release
+  ansible.builtin.debug:
+    msg:
+      - "helm latest release    : {{ helm_version_latest }}"
+      - "helm requested release : {{ helm_version }}"
+      - "helm installed release : {{ helm_version_installed }}"
+
+- name: Install/update helm
+  when: helm_version != helm_version_installed
+  block:
+
+    - name: Create temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+      changed_when: false
+      register: __tmpdir
+
+    - name: Download & extract binaries
+      ansible.builtin.unarchive:
+        src: https://get.helm.sh/{{ helm_file }}
+        dest: "{{ __tmpdir.path }}"
+        remote_src: true
+      changed_when: false
+
+    - name: Copy binary to {{ helm_path }}
+      ansible.builtin.copy:
+        src: "{{ __tmpdir.path }}/{{ helm_system }}-{{ helm_architecture }}/helm"
+        dest: "{{ helm_path }}"
+        mode: "0555"
+        remote_src: true
+      become: yes
+
+    - name: Cleanup temporary directory
+      ansible.builtin.file:
+        path: "{{ __tmpdir.path }}"
+        state: absent
+      changed_when: false

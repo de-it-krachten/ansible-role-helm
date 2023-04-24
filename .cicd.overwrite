@@ -1,0 +1,16 @@
+---
+
+# Generic
+generic:
+  role: ansible-role-helm
+  role_short: helm
+  role_description: |
+    Installs helm onto a variety of platforms<br>
+    https://helm.sh<br>
+    https://github.com/helm/helm<br>
+  collections:
+    - kubernetes.core
+
+molecule:
+  requirements:
+    roles_extra: []
