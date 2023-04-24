@@ -27,14 +27,8 @@ helm_owner: root
 helm_group: root
 helm_mode: '0755'
 
-## Helm platfrom
-#helm_platform: "{{ ansible_system | lower }}"
-
-## Helm architecture
-#helm_arch: "{{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}"
-
 helm_plugins:
   - path: https://github.com/databus23/helm-diff
     state: present
-#  - name: diff
-#    state: absent
+#   - name: diff
+#     state: absent

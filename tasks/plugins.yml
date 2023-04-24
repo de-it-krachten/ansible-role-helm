@@ -1,7 +1,7 @@
 ---
 
 - name: Install helm plugins
-  community.kubernetes.helm_plugin:
+  kubernetes.core.helm_plugin:
     plugin_name: "{{ helm_plugin.name | default(omit) }}"
     plugin_path: "{{ helm_plugin.path | default(omit) }}"
     state: "{{ helm_plugin.state | default('present') }}"

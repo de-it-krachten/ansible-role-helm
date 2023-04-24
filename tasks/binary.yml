@@ -84,7 +84,7 @@
       become: yes
 
     - name: Cleanup temporary directory
-      file:
+      ansible.builtin.file:
         path: "{{ __tmpdir.path }}"
         state: absent
       changed_when: false

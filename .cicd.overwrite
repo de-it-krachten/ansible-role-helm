@@ -8,7 +8,8 @@ generic:
     Installs helm onto a variety of platforms<br>
     https://helm.sh<br>
     https://github.com/helm/helm<br>
-  collections: []
+  collections:
+    - kubernetes.core
 
 molecule:
   requirements:
