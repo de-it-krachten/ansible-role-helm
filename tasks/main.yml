@@ -1,0 +1,4 @@
+---
+
+- include_tasks: binary.yml
+- include_tasks: plugins.yml
