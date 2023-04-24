@@ -1,5 +1,9 @@
 ---
 
+- name: Install prerequisits
+  ansible.builtin.package:
+    name: git
+
 - name: Install helm plugins
   kubernetes.core.helm_plugin:
     plugin_name: "{{ helm_plugin.name | default(omit) }}"
