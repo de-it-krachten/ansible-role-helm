@@ -3,6 +3,7 @@
 - name: Install prerequisits
   ansible.builtin.package:
     name: git
+  become: yes
 
 - name: Install helm plugins
   kubernetes.core.helm_plugin:
