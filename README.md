@@ -89,8 +89,6 @@ helm_plugins:
 - name: sample playbook for role 'helm'
   hosts: all
   become: "yes"
-  roles:
-    - deitkrachten.showinfo
   tasks:
     - name: Include role 'helm'
       ansible.builtin.include_role:
