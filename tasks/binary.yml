@@ -24,6 +24,10 @@
   ansible.builtin.uri:
     url: "{{ helm_api + '/releases/latest' }}"
   check_mode: no
+  environment:
+    https_proxy: "{{ https_proxy | default('') }}"
+    http_proxy: "{{ http_proxy | default('') }}"
+    no_proxy: "{{ no_proxy | default('') }}"
   register: helm_version_info
 
 - name: Get latest release tag
@@ -39,6 +43,10 @@
   ansible.builtin.uri:
     url: "{{ helm_api + '/releases?per_page=1000' }}"
   check_mode: no
+  environment:
+    https_proxy: "{{ https_proxy | default('') }}"
+    http_proxy: "{{ http_proxy | default('') }}"
+    no_proxy: "{{ no_proxy | default('') }}"
   register: helm_version_info
 
 - name: Get version information
@@ -70,10 +78,14 @@
 
     - name: Download & extract binaries
       ansible.builtin.unarchive:
-        src: https://get.helm.sh/{{ helm_file }}
+        src: "{{ helm_archive_url }}"
         dest: "{{ __tmpdir.path }}"
         remote_src: true
       changed_when: false
+      environment:
+        https_proxy: "{{ https_proxy | default('') }}"
+        http_proxy: "{{ http_proxy | default('') }}"
+        no_proxy: "{{ no_proxy | default('') }}"
 
     - name: Copy binary to {{ helm_path }}
       ansible.builtin.copy:
