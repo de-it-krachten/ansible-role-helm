@@ -6,6 +6,9 @@ helm_api: https://api.github.com/repos/helm/helm
 # Github CLI - repo
 helm_repo: https://github.com/helm/helm
 
+# Helm archive
+helm_archive_url: https://get.helm.sh/{{ helm_file }}
+
 # Lookup table for architecture
 helm:
   architecture:
