@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/de-it-krachten/ansible-role-helm/compare/v1.0.2...v1.1.0) (2023-07-07)
+
+
+### Features
+
+* Add proxy support ([80ee0f1](https://github.com/de-it-krachten/ansible-role-helm/commit/80ee0f1bc3e71f2e2db433d21d4b7a4474e79ab8))
+
 ## [1.0.2](https://github.com/de-it-krachten/ansible-role-helm/compare/v1.0.1...v1.0.2) (2023-05-06)
 
 
