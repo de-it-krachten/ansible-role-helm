@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/de-it-krachten/ansible-role-helm/compare/v1.2.0...v1.3.0) (2024-06-03)
+
+
+### Features
+
+* Add support for Ubuntu 24.04 LTS + Fedora 40 ([ea09c5a](https://github.com/de-it-krachten/ansible-role-helm/commit/ea09c5a80c4d558e4965e2ad3538266636fcc081))
+
 # [1.2.0](https://github.com/de-it-krachten/ansible-role-helm/compare/v1.1.0...v1.2.0) (2023-08-14)
 
 
