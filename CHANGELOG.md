@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/de-it-krachten/ansible-role-helm/compare/v1.3.0...v1.4.0) (2024-12-29)
+
+
+### Features
+
+* Update supported platforms & CI ([e338bf2](https://github.com/de-it-krachten/ansible-role-helm/commit/e338bf2b97636bf4889fa98aae569798b7b8195c))
+
 # [1.3.0](https://github.com/de-it-krachten/ansible-role-helm/compare/v1.2.0...v1.3.0) (2024-06-03)
 
 
