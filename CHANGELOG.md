@@ -1,3 +1,14 @@
+# [1.5.0](https://github.com/de-it-krachten/ansible-role-helm/compare/v1.4.0...v1.5.0) (2025-08-06)
+
+
+### Features
+
+* Add support for AlmaLinux 10 ([be59604](https://github.com/de-it-krachten/ansible-role-helm/commit/be596040fb0fee8947d1e4768a3adec83eea325f))
+* Add support for Debian 13 (Trixie) ([65fe04f](https://github.com/de-it-krachten/ansible-role-helm/commit/65fe04fec09eee667c12506648a6ac44eb00023b))
+* Add support for OracleLinux 10 ([9da930c](https://github.com/de-it-krachten/ansible-role-helm/commit/9da930c89281c06296f8bdcf22d445da52897036))
+* Add support for Red Hat Enterprise Linux 10 ([3eae9a6](https://github.com/de-it-krachten/ansible-role-helm/commit/3eae9a682a126e195a553a825d9cc8dba9014438))
+* Add support for RockyLinux 10 ([11a4aad](https://github.com/de-it-krachten/ansible-role-helm/commit/11a4aad9d61322e2e8a00acd921c4a55ee7ae6fc))
+
 # [1.4.0](https://github.com/de-it-krachten/ansible-role-helm/compare/v1.3.0...v1.4.0) (2024-12-29)
 
 
