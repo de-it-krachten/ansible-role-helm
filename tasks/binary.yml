@@ -51,9 +51,9 @@
 
 - name: Get version information
   ansible.builtin.set_fact:
-    helm_version_info: "{{ helm_version_info.json | json_query(query) | first }}"
+    helm_version_info: "{{ helm_version_info.json | json_query(qq) | first }}"
   vars:
-    query: "[?tag_name=='{{ helm_version }}']"
+    qq: "[?tag_name=='{{ helm_version }}']"
 
 - name: Construct filename based on the system & architecture
   ansible.builtin.set_fact:
