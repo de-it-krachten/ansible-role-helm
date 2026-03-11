@@ -6,10 +6,7 @@
   vars:
     molecule_driver: "{{ lookup('env', 'MOLECULE_DRIVER_NAME') }}"
     helm_user: root
-    helm_plugins:
-      # - {'name': 'diff', 'path': 'https://github.com/databus23/helm-diff', 'version': '3.15.0'}
-      - {'name': 'diff', 'path': 'https://github.com/databus23/helm-diff', 'version': 'absent'}
-      - {'name': 'unittest', 'path': 'https://github.com/helm-unittest/helm-unittest', 'version': 'latest'}
+    helm_plugins: [{'name': 'diff', 'path': 'https://github.com/databus23/helm-diff', 'version': '3.15.2'}, {'name': 'unittest', 'path': 'https://github.com/helm-unittest/helm-unittest', 'version': 'latest'}]
   tasks:
     - name: Include role 'ansible-role-helm'
       ansible.builtin.include_role:

@@ -1,6 +1,6 @@
 ---
 
-- name: Install prerequisits
+- name: Install prerequisites
   ansible.builtin.package:
     name: git
   become: yes
@@ -26,7 +26,35 @@
            | regex_replace('  *')
            | regex_replace('\t',',')
            | lower
+           | regex_replace('version','version_installed')
            | community.general.from_csv }}
+
+    - name: Get list of all releases
+      ansible.builtin.uri:
+        url: "{{ helm_plugin.path | regex_replace('https://github.com', 'https://api.github.com/repos') }}/releases"
+      register: __helm_plugin_releases
+      loop: "{{ helm_plugins }}"
+      loop_control:
+        loop_var: helm_plugin
+
+    - name: Create list with latest versions
+      ansible.builtin.set_fact:
+        helm_plugins_available: >-
+          {{
+            (helm_plugins_available | default([])) + [ { 'name': item.helm_plugin.name, 'version_latest': item.json[0].tag_name } ]
+          }}
+      loop: "{{ __helm_plugin_releases.results }}"
+      loop_control:
+        label: "{{ item.helm_plugin }}"
+
+    - name: Merge all lists
+      ansible.builtin.set_fact:
+        helm_plugins1: >-
+          {{
+            helm_plugins
+            | community.general.lists_mergeby(helm_plugins_available, 'name')
+            | community.general.lists_mergeby(helm_plugins_installed, 'name')
+          }}
 
     - name: Uninstall helm plugins
       ansible.builtin.command:
@@ -34,7 +62,14 @@
       register: __helm_plugin_uninstall
       changed_when: __helm_plugin_uninstall.rc == 0
       failed_when: false
-      loop: "{{ helm_plugins }}"
+      when:
+        - v_installed | length > 0    # plugin must be installed
+        - v_installed != v_required   # latest or other version than installed
+      vars:
+        v_required: "{{ helm_plugin.version | regex_replace('latest', v_latest) }}"
+        v_installed: "{{ helm_plugin.version_installed | default('') }}"
+        v_latest: "{{ helm_plugin.version_latest | regex_replace('^v') }}"
+      loop: "{{ helm_plugins1 }}"
       loop_control:
         loop_var: helm_plugin
 

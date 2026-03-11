@@ -109,7 +109,7 @@ helm_validate_certs: false
     helm_plugins:
       - name: diff
         path: https://github.com/databus23/helm-diff
-        version: latest
+        version: 3.15.2
       - name: unittest
         path: https://github.com/helm-unittest/helm-unittest
         version: latest
