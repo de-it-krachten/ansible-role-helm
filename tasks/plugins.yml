@@ -5,30 +5,51 @@
     name: git
   become: yes
 
-# - name: Install helm plugins
-#   kubernetes.core.helm_plugin:
-#     plugin_name: "{{ helm_plugin.name | default(omit) }}"
-#     plugin_path: "{{ helm_plugin.path | default(omit) }}"
-#     binary_path: "{{ helm_path }}"
-#     state: "{{ helm_plugin.state | default('present') }}"
-#     validate_certs: false
-#   loop: "{{ helm_plugins }}"
-#   loop_control:
-#     loop_var: helm_plugin
-#   environment:
-#     K8S_AUTH_VERIFY_SSL: false
+- name: Install plugins for user '{{ helm_user }}'
+  when: helm_user is defined
+  become: true
+  become_user: "{{ helm_user }}"
+  environment:
+    PATH: /usr/local/bin:{{ ansible_env.PATH }}
+  block:
 
-- name: Install helm plugins
-  ansible.builtin.shell:
-    cmd: >-
-      version1=$(helm plugin list | awk '$1=="{{ helm_plugin.name }}" {print $2}')
-      helm plugin install {{ helm_plugin.path }}
-      --verify={{ helm_validate_certs }}
-      {% if helm_plugin.version is defined %}
-      --version={{ helm_plugin.version }}
-      {% endif %}
-  args:
-    creates: "{{ ansible_env.HOME }}/.local/share/helm/plugins/{{ helm_plugin.name }}"
-  loop: "{{ helm_plugins }}"
-  loop_control:
-    loop_var: helm_plugin
+    - name: Get list of installed plugins
+      ansible.builtin.command:
+        cmd: helm plugin list
+      changed_when: false
+      register: __helm_plugins__
+
+    - name: Import list of plugins installed
+      ansible.builtin.set_fact:
+        helm_plugins_installed: >-
+          {{ __helm_plugins__.stdout
+           | regex_replace('  *')
+           | regex_replace('\t',',')
+           | lower
+           | community.general.from_csv }}
+
+    - name: Uninstall helm plugins
+      ansible.builtin.command:
+        cmd: helm plugin uninstall {{ helm_plugin.name }}
+      register: __helm_plugin_uninstall
+      changed_when: __helm_plugin_uninstall.rc == 0
+      failed_when: false
+      loop: "{{ helm_plugins }}"
+      loop_control:
+        loop_var: helm_plugin
+
+    - name: Install helm plugins
+      ansible.builtin.command:
+        cmd: >-
+          helm plugin install {{ helm_plugin.path }}
+          {% if helm_plugin.version | default('latest') != 'latest' %}
+          --version={{ helm_plugin.version }}
+          {% endif %}
+          --verify={{ helm_validate_certs }}
+      register: __helm_plugin_install
+      changed_when: __helm_plugin_install.rc == 0
+      failed_when: false
+      when: helm_plugin.version != 'absent'
+      loop: "{{ helm_plugins }}"
+      loop_control:
+        loop_var: helm_plugin

@@ -31,7 +31,7 @@ helm_group: root
 helm_mode: '0755'
 
 helm_plugins:
-  - name: helm-diff
+  - name: diff
     path: https://github.com/databus23/helm-diff
     state: present
 #   - name: diff

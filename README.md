@@ -83,7 +83,7 @@ helm_group: root
 helm_mode: '0755'
 
 helm_plugins:
-  - name: helm-diff
+  - name: diff
     path: https://github.com/databus23/helm-diff
     state: present
 #   - name: diff
@@ -103,6 +103,16 @@ helm_validate_certs: false
 - name: sample playbook for role 'helm'
   hosts: all
   become: 'yes'
+  vars:
+    molecule_driver: '{{ lookup(''env'', ''MOLECULE_DRIVER_NAME'') }}'
+    helm_user: root
+    helm_plugins:
+      - name: diff
+        path: https://github.com/databus23/helm-diff
+        version: latest
+      - name: unittest
+        path: https://github.com/helm-unittest/helm-unittest
+        version: latest
   tasks:
     - name: Include role 'helm'
       ansible.builtin.include_role:
