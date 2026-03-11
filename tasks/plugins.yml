@@ -5,12 +5,30 @@
     name: git
   become: yes
 
+# - name: Install helm plugins
+#   kubernetes.core.helm_plugin:
+#     plugin_name: "{{ helm_plugin.name | default(omit) }}"
+#     plugin_path: "{{ helm_plugin.path | default(omit) }}"
+#     binary_path: "{{ helm_path }}"
+#     state: "{{ helm_plugin.state | default('present') }}"
+#     validate_certs: false
+#   loop: "{{ helm_plugins }}"
+#   loop_control:
+#     loop_var: helm_plugin
+#   environment:
+#     K8S_AUTH_VERIFY_SSL: false
+
 - name: Install helm plugins
-  kubernetes.core.helm_plugin:
-    plugin_name: "{{ helm_plugin.name | default(omit) }}"
-    plugin_path: "{{ helm_plugin.path | default(omit) }}"
-    binary_path: "{{ helm_path }}"
-    state: "{{ helm_plugin.state | default('present') }}"
+  ansible.builtin.shell:
+    cmd: >-
+      version1=$(helm plugin list | awk '$1=="{{ helm_plugin.name }}" {print $2}')
+      helm plugin install {{ helm_plugin.path }}
+      --verify={{ helm_validate_certs }}
+      {% if helm_plugin.version is defined %}
+      --version={{ helm_plugin.version }}
+      {% endif %}
+  args:
+    creates: "{{ ansible_env.HOME }}/.local/share/helm/plugins/{{ helm_plugin.name }}"
   loop: "{{ helm_plugins }}"
   loop_control:
     loop_var: helm_plugin
