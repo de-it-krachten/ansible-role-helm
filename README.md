@@ -90,7 +90,7 @@ helm_plugins:
 #     state: absent
 
 # Helm vlidate certs
-#helm_validate_certs: true
+# helm_validate_certs: true
 helm_validate_certs: false
 </pre></code>
 
