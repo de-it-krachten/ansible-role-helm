@@ -14,3 +14,13 @@ generic:
 molecule:
   requirements:
     roles_extra: []
+  converge:
+    vars:
+      helm_user: root
+      helm_plugins:
+        - name: diff
+          path: https://github.com/databus23/helm-diff
+          version: '3.15.2'
+        - name: unittest
+          path: https://github.com/helm-unittest/helm-unittest
+          version: latest

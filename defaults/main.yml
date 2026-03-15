@@ -31,7 +31,13 @@ helm_group: root
 helm_mode: '0755'
 
 helm_plugins:
-  - path: https://github.com/databus23/helm-diff
+  - name: diff
+    path: https://github.com/databus23/helm-diff
     state: present
 #   - name: diff
 #     state: absent
+
+# Helm vlidate certs
+# helm_validate_certs: true
+helm_validate_certs: false
+
