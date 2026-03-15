@@ -1,3 +1,17 @@
+# [1.6.0](https://github.com/de-it-krachten/ansible-role-helm/compare/v1.5.0...v1.6.0) (2026-03-15)
+
+
+### Bug Fixes
+
+* Add package dependencies ([f83390b](https://github.com/de-it-krachten/ansible-role-helm/commit/f83390b1edbff4dae332d3f8a105ca8ce84d22ce))
+* Improve plugin installation ([52bbb52](https://github.com/de-it-krachten/ansible-role-helm/commit/52bbb52976b6d66c690513b4606df9bd7195750d))
+
+
+### Features
+
+* Drop support for openSUSE Leap 15 ([3e6d745](https://github.com/de-it-krachten/ansible-role-helm/commit/3e6d745ede168d59e54b19218bc84d642249afac))
+* Drop support for SUSE Linux Enterprise 15 ([e3a5c82](https://github.com/de-it-krachten/ansible-role-helm/commit/e3a5c8211033e66d8b00e020e2b6739ec51f13fe))
+
 # [1.5.0](https://github.com/de-it-krachten/ansible-role-helm/compare/v1.4.0...v1.5.0) (2025-08-06)
 
 
