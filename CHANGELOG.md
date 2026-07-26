@@ -1,3 +1,13 @@
+# [1.7.0](https://github.com/de-it-krachten/ansible-role-helm/compare/v1.6.0...v1.7.0) (2026-07-26)
+
+
+### Features
+
+* Add support for ansible-core 2.20+ ([497a0e2](https://github.com/de-it-krachten/ansible-role-helm/commit/497a0e28259c725fc0ebdb8d6d5f49d5155c1a55))
+* Added support for Fedora 44 ([6c74ca3](https://github.com/de-it-krachten/ansible-role-helm/commit/6c74ca39fb3e06a8b4379dadffc75be63cfa5dee))
+* Added support for Ubuntu 26.04 LTS ([4b7e133](https://github.com/de-it-krachten/ansible-role-helm/commit/4b7e1337ed5a48627dfdc1bdc01becb3a73d5f31))
+* Drop support for Fedora 42 ([8b4047d](https://github.com/de-it-krachten/ansible-role-helm/commit/8b4047d27667996c51b28fdcec8a19ebcb70da8b))
+
 # [1.6.0](https://github.com/de-it-krachten/ansible-role-helm/compare/v1.5.0...v1.6.0) (2026-03-15)
 
 
