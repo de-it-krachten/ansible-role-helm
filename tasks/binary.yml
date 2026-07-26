@@ -2,8 +2,8 @@
 
 - name: Lookup alternative system & architecture
   ansible.builtin.set_fact:
-    helm_system: "{{ helm['system'][ansible_system] }}"
-    helm_architecture: "{{ helm['architecture'][ansible_architecture] | default(ansible_architecture) }}"
+    helm_system: "{{ helm['system'][ansible_facts.system] }}"
+    helm_architecture: "{{ helm['architecture'][ansible_facts.architecture] | default(ansible_facts.architecture) }}"
 
 - name: Get helm version installed
   ansible.builtin.shell: |
