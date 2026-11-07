@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/de-it-krachten/ansible-role-helm/compare/v1.7.0...v1.8.0) (2026-11-07)
+
+
+### Features
+
+* Drop support for Debian 11 (Bullseye) ([92e65bc](https://github.com/de-it-krachten/ansible-role-helm/commit/92e65bc02bbcfdd229583b9744b06c3c538c953a))
+
 # [1.7.0](https://github.com/de-it-krachten/ansible-role-helm/compare/v1.6.0...v1.7.0) (2026-07-26)
 
 
